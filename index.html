@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr" class="bg-slate-950 text-white">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CinéTrack</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-6">
+
+  <header class="flex justify-between items-center pb-4 border-b border-slate-800 mb-6">
+    <h1 class="text-xl font-bold">Ciné<span class="text-red-600">Track</span></h1>
+  </header>
+
+  <main class="flex flex-col lg:flex-row gap-6">
+
+    <div class="w-full lg:w-3/4">
+
+      <div class="flex flex-col md:flex-row gap-4 mb-6">
+        <input 
+          id="searchFilm" 
+          type="search" 
+          placeholder="Rechercher un film..." 
+          class="w-full bg-slate-900 border border-slate-800 p-2 rounded text-sm"
+        >
+        <select 
+          id="genreFilter" 
+          class="bg-slate-900 border border-slate-800 p-2 rounded text-sm"
+        >
+          <option value="all">Tous</option>
+          <option value="movie">Films</option>
+          <option value="series">Séries</option>
+        </select>
+      </div>
+
+      <div id="moviesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+
+      <div id="pagination" class="flex justify-center gap-2 mt-6"></div>
+
+    </div>
+
+    <aside class="w-full lg:w-1/4 bg-slate-900 p-4 rounded border border-slate-800">
+      <h2 class="font-bold text-lg mb-4 border-b border-slate-800 pb-2">Favorites</h2>
+      <div id="favoritesList" class="text-xs text-slate-400">
+        <p>No favorites added yet.</p>
+      </div>
+    </aside>
+
+  </main>
+
+  <div id="movieModal" class="fixed inset-0 bg-black/75 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded p-6 max-w-lg w-full relative">
+      <button id="closeModal" class="absolute top-3 right-4 text-slate-400 hover:text-white text-xl font-bold">&times;</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <footer class="w-full border-t border-slate-800 mt-10 pt-4 text-center text-sm text-slate-400">
+    <p>&copy; All Rights Reserved</p>
+  </footer>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
