@@ -7,4 +7,4 @@ export async function fetchMovies() {
   }
   const data = await res.json();
   return data;
-}
+}   
