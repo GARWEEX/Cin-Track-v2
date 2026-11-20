@@ -9,40 +9,55 @@ document.addEventListener("DOMContentLoaded", async () => {
   const typeFilter = document.getElementById("genreFilter");
   const pagination = document.getElementById("pagination");
   const modal = document.getElementById("movieModal");
-  const closeModalBtn = document.getElementById("closeModal");
+  const closeModalButton = document.getElementById("closeModal");
 
   function closeModal() {
     modal.classList.add("hidden");
+    modal.classList.remove("flex");
   }
 
-  closeModalBtn.addEventListener("click", closeModal);
+  closeModalButton.addEventListener("click", closeModal);
+
   modal.addEventListener("click", event => {
-    if (event.target === modal) closeModal();
+    if (event.target === modal) {
+      closeModal();
+    }
   });
+
   document.addEventListener("keydown", event => {
-    if (event.key === "Escape") closeModal();
+    if (event.key === "Escape") {
+      closeModal();
+    }
   });
 
   moviesGrid.innerHTML = '<p class="col-span-full text-center text-slate-400 py-8">Chargement du catalogue...</p>';
 
   try {
-    const [movies, allComments] = await Promise.all([fetchMovies(), fetchComments()]);
+    const movies = await fetchMovies();
+    const allComments = await fetchComments();
 
     for (let i = 0; i < movies.length; i++) {
-      const movie = movies[i];
-      movie.comments = allComments.filter(comment => String(comment.movieId) === String(movie.id));
+      movies[i].comments = allComments.filter(comment => {
+        return String(comment.movieId) === String(movies[i].id);
+      });
 
       let total = 0;
-      for (let j = 0; j < movie.comments.length; j++) {
-        total += Number(movie.comments[j].rating || 0);
+      for (let j = 0; j < movies[i].comments.length; j++) {
+        total += Number(movies[i].comments[j].rating || 0);
       }
-      movie.avgRating = movie.comments.length ? (total / movie.comments.length).toFixed(1) : "N/A";
+
+      if (movies[i].comments.length > 0) {
+        movies[i].avgRating = (total / movies[i].comments.length).toFixed(1);
+      } else {
+        movies[i].avgRating = "N/A";
+      }
     }
 
     let currentPage = 1;
 
     function showPage(list, page) {
       currentPage = page;
+
       const start = (page - 1) * 8;
       const pageMovies = list.slice(start, start + 8);
       renderMovies(pageMovies, moviesGrid);
@@ -51,12 +66,22 @@ document.addEventListener("DOMContentLoaded", async () => {
       pagination.innerHTML = "";
 
       for (let i = 1; i <= totalPages; i++) {
-        const color = i === page ? "bg-red-600" : "bg-slate-800 hover:bg-slate-700";
-        pagination.innerHTML += `<button type="button" data-page="${i}" class="px-3 py-1 rounded ${color}">${i}</button>`;
+        let color = "bg-slate-800 hover:bg-slate-700";
+        if (i === page) {
+          color = "bg-red-600";
+        }
+
+        pagination.innerHTML += `
+          <button type="button" data-page="${i}" class="px-3 py-1 rounded ${color}">
+            ${i}
+          </button>`;
       }
 
-      pagination.querySelectorAll("button").forEach(button => {
-        button.addEventListener("click", () => showPage(list, Number(button.dataset.page)));
+      const buttons = pagination.querySelectorAll("button");
+      buttons.forEach(button => {
+        button.addEventListener("click", () => {
+          showPage(list, Number(button.dataset.page));
+        });
       });
     }
 
@@ -69,10 +94,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupCommentForm(() => updateCatalog(currentPage));
     displayFavorites();
     updateCatalog(1);
+
     searchInput.addEventListener("input", () => updateCatalog(1));
     typeFilter.addEventListener("change", () => updateCatalog(1));
   } catch (error) {
-    console.error(error);
     moviesGrid.innerHTML = '<p class="col-span-full text-center text-red-500 py-8">Impossible de charger les données. Vérifiez votre connexion puis réessayez.</p>';
   }
 });

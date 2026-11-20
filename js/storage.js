@@ -1,10 +1,15 @@
 export function getFavorites() {
   const data = localStorage.getItem("favorites");
-  if (!data) return [];
+
+  if (!data) {
+    return [];
+  }
 
   try {
     const favorites = JSON.parse(data);
-    if (Array.isArray(favorites)) return favorites;
+    if (Array.isArray(favorites)) {
+      return favorites;
+    }
     return [];
   } catch (error) {
     return [];
