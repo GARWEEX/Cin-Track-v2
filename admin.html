@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr" class="bg-slate-950 text-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CinéTrack - Administration</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-4 md:p-6">
+  <header class="flex justify-between items-center pb-4 border-b border-slate-800 mb-6 gap-4">
+    <h1 class="text-xl font-bold">Ciné<span class="text-red-600">Track</span> - Administration</h1>
+    <a href="index.html" class="bg-slate-800 px-3 py-2 rounded text-sm">Retour</a>
+  </header>
+
+  <div id="statusMsg" class="hidden mb-4 p-3 rounded text-sm"></div>
+  <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <section class="bg-slate-900 border border-slate-800 p-4 rounded h-fit">
+      <h2 id="formTitle" class="font-bold text-lg mb-4 border-b border-slate-800 pb-2">Ajouter un contenu</h2>
+      <form id="movieForm" class="space-y-3 text-sm">
+        <input id="title" type="text" placeholder="Titre *" required class="w-full bg-slate-950 border border-slate-800 p-2 rounded">
+        <div class="grid grid-cols-2 gap-2">
+          <select id="type" class="bg-slate-950 border border-slate-800 p-2 rounded"><option value="movie">Film</option><option value="series">Série</option></select>
+          <input id="releaseYear" type="number" placeholder="Année *" min="1888" max="2100" required class="bg-slate-950 border border-slate-800 p-2 rounded">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <input id="duration" type="number" placeholder="Durée (min)" min="1" class="bg-slate-950 border border-slate-800 p-2 rounded">
+          <input id="seasons" type="number" placeholder="Saisons" min="1" class="bg-slate-950 border border-slate-800 p-2 rounded">
+        </div>
+        <input id="genres" type="text" placeholder="Genres" class="w-full bg-slate-950 border border-slate-800 p-2 rounded">
+        <input id="directors" type="text" placeholder="Réalisateurs" class="w-full bg-slate-950 border border-slate-800 p-2 rounded">
+        <input id="productionCountries" type="text" placeholder="Pays" class="w-full bg-slate-950 border border-slate-800 p-2 rounded">
+        <div>
+          <input id="poster" type="url" placeholder="URL de l'affiche *" required class="w-full bg-slate-950 border border-slate-800 p-2 rounded">
+          <img id="posterPreview" alt="Aperçu de l'affiche" class="hidden w-20 h-28 object-cover rounded mt-2">
+        </div>
+        <textarea id="description" rows="3" placeholder="Description" class="w-full bg-slate-950 border border-slate-800 p-2 rounded"></textarea>
+        <div class="flex gap-2">
+          <button type="submit" id="submitBtn" class="w-full bg-red-600 py-2 rounded font-bold">Ajouter</button>
+          <button type="button" id="cancelBtn" class="hidden bg-slate-700 px-3 py-2 rounded">Annuler</button>
+        </div>
+      </form>
+    </section>
+    <section class="lg:col-span-2 bg-slate-900 border border-slate-800 p-4 rounded overflow-x-auto">
+      <h2 class="font-bold text-lg mb-4 border-b border-slate-800 pb-2">Liste des contenus</h2>
+      <table class="w-full text-left text-sm">
+        <thead class="text-slate-400 border-b border-slate-800">
+          <tr><th class="pb-2 pr-3">Affiche</th><th class="pb-2 pr-3">Titre</th><th class="pb-2 pr-3">Type</th><th class="pb-2 pr-3">Année</th><th class="pb-2 text-right">Actions</th></tr>
+        </thead>
+        <tbody id="adminList" class="divide-y divide-slate-800"></tbody>
+      </table>
+    </section>
+  </main>
+  <script type="module" src="./js/admin.js"></script>
+</body>
+</html>

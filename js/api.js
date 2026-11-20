@@ -2,10 +2,10 @@ const BASE_URL = "https://6afd9c422a9c141d36b8bd63.mockapi.io/api/v1";
 
 export async function fetchMovies() {
   const response = await fetch(`${BASE_URL}/movies`);
-  if (!response.ok) throw new Error("Impossible de charger les contenus.");
-  const movies = await response.json();
-  if (!Array.isArray(movies)) throw new Error("Les données reçues sont invalides.");
-  return movies;
+  if (!response.ok) {
+    throw new Error("Erreur de chargement");
+  }
+  return await response.json();
 }
 
 export async function createMovie(movie) {
@@ -14,7 +14,10 @@ export async function createMovie(movie) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(movie)
   });
-  if (!response.ok) throw new Error("Impossible d'ajouter le contenu.");
+
+  if (!response.ok) {
+    throw new Error("Erreur d'ajout");
+  }
   return await response.json();
 }
 
@@ -24,21 +27,38 @@ export async function updateMovie(id, movie) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(movie)
   });
-  if (!response.ok) throw new Error("Impossible de modifier le contenu.");
+
+  if (!response.ok) {
+    throw new Error("Erreur de modification");
+  }
   return await response.json();
 }
 
 export async function deleteMovie(id) {
-  const response = await fetch(`${BASE_URL}/movies/${id}`, { method: "DELETE" });
-  if (!response.ok) throw new Error("Impossible de supprimer le contenu.");
+  const response = await fetch(`${BASE_URL}/movies/${id}`, {
+    method: "DELETE"
+  });
+
+  if (!response.ok) {
+    throw new Error("Erreur de suppression");
+  }
 }
 
 export async function fetchComments() {
   const response = await fetch(`${BASE_URL}/comments`);
-  if (response.status === 404) return [];
-  if (!response.ok) throw new Error("Impossible de charger les commentaires.");
+
+  if (response.status === 404) {
+    return [];
+  }
+  if (!response.ok) {
+    throw new Error("Erreur de chargement des commentaires");
+  }
+
   const comments = await response.json();
-  return Array.isArray(comments) ? comments : [];
+  if (Array.isArray(comments)) {
+    return comments;
+  }
+  return [];
 }
 
 export async function addMovieComment(movieId, comment) {
@@ -47,6 +67,9 @@ export async function addMovieComment(movieId, comment) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(comment)
   });
-  if (!response.ok) throw new Error("Impossible d'ajouter le commentaire.");
+
+  if (!response.ok) {
+    throw new Error("Erreur d'ajout du commentaire");
+  }
   return await response.json();
 }

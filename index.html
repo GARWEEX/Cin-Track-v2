@@ -15,56 +15,48 @@
   <main class="flex flex-col lg:flex-row gap-6">
     <div class="w-full lg:w-3/4">
       <div class="flex flex-col md:flex-row gap-4 mb-6">
-        <input id="searchFilm" type="search" placeholder="Rechercher un film..." aria-label="Rechercher un contenu" class="w-full bg-slate-900 border border-slate-800 p-2 rounded text-sm">
-        <select id="genreFilter" aria-label="Filtrer par type" class="bg-slate-900 border border-slate-800 p-2 rounded text-sm">
+        <input id="searchFilm" type="search" placeholder="Rechercher un film..." class="w-full bg-slate-900 border border-slate-800 p-2 rounded text-sm">
+        <select id="genreFilter" class="bg-slate-900 border border-slate-800 p-2 rounded text-sm">
           <option value="all">Tous</option>
           <option value="movie">Films</option>
           <option value="series">Séries</option>
         </select>
       </div>
-
-      <div id="moviesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" aria-live="polite"></div>
+      <div id="moviesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
       <div id="pagination" class="flex justify-center gap-2 mt-6 flex-wrap"></div>
     </div>
 
     <aside class="w-full lg:w-1/4 bg-slate-900 p-4 rounded border border-slate-800 h-fit">
       <h2 class="font-bold text-lg mb-4 border-b border-slate-800 pb-2">Favoris</h2>
-      <div id="favoritesList" class="text-xs text-slate-400">
-        <p>Aucun favori ajouté.</p>
-      </div>
+      <div id="favoritesList" class="text-xs text-slate-400"><p>Aucun favori ajouté.</p></div>
     </aside>
   </main>
 
-  <div id="movieModal" class="fixed inset-0 bg-black/75 hidden flex items-center justify-center p-4 z-50" role="dialog" aria-modal="true" aria-label="Détails du contenu">
+  <div id="movieModal" class="fixed inset-0 bg-black/75 hidden items-center justify-center p-4 z-50">
     <div class="bg-slate-900 border border-slate-800 rounded p-6 max-w-lg w-full relative max-h-[90vh] overflow-y-auto">
-      <button id="closeModal" type="button" aria-label="Fermer" class="absolute top-3 right-4 text-slate-400 hover:text-white text-xl font-bold">&times;</button>
+      <button id="closeModal" type="button" class="absolute top-3 right-4 text-slate-400 text-xl font-bold">&times;</button>
       <div id="modalContent" class="pt-5"></div>
-      <section class="bg-slate-900 rounded p-2 text-sm space-y-1 border-t border-slate-800 mt-4 pt-3">
-        <h4 id="commentsTitle" class="font-bold text-white mb-2">Commentaires (0)</h4>
+      <section class="rounded p-2 text-sm border-t border-slate-800 mt-4 pt-3">
+        <h4 id="commentsTitle" class="font-bold mb-2">Commentaires (0)</h4>
         <div id="commentsList" class="max-h-40 overflow-y-auto mb-3"></div>
         <form id="commentForm" class="space-y-2 border-t border-slate-800 pt-3">
           <div class="flex gap-2">
             <input type="text" id="commentAuthor" placeholder="Votre nom" required maxlength="80" class="w-2/3 bg-slate-950 border border-slate-800 p-1.5 rounded text-xs">
-            <select id="commentRating" aria-label="Note" class="w-1/3 bg-slate-950 border border-slate-800 p-1.5 rounded text-xs">
-              <option value="5">5 ★</option>
-              <option value="4">4 ★</option>
-              <option value="3">3 ★</option>
-              <option value="2">2 ★</option>
-              <option value="1">1 ★</option>
+            <select id="commentRating" class="w-1/3 bg-slate-950 border border-slate-800 p-1.5 rounded text-xs">
+              <option value="5">5 ★</option><option value="4">4 ★</option><option value="3">3 ★</option><option value="2">2 ★</option><option value="1">1 ★</option>
             </select>
           </div>
           <textarea id="commentText" rows="2" placeholder="Votre avis..." required maxlength="1000" class="w-full bg-slate-950 border border-slate-800 p-1.5 rounded text-xs"></textarea>
-          <p id="commentMsg" class="text-xs hidden" role="status" aria-live="polite"></p>
+          <p id="commentMsg" class="text-xs hidden"></p>
           <button type="submit" id="commentSubmit" class="w-full bg-red-600 py-1.5 rounded text-xs font-bold">Publier</button>
         </form>
       </section>
     </div>
   </div>
 
-  <footer class="w-full border-t border-slate-800 mt-10 pt-4 text-center text-sm text-slate-400">
+  <footer class="border-t border-slate-800 mt-10 pt-4 text-center text-sm text-slate-400">
     <p>&copy; CinéTrack - Tous droits réservés</p>
   </footer>
-
   <script type="module" src="./js/main.js"></script>
 </body>
 </html>
